@@ -1,42 +1,39 @@
-#include <iostream>
-#include <vector>
 #include <list>
+#include <vector>
 
-#include <benchmark/benchmark.h>
-
-static void BM_SumList(benchmark::State& state)
+#define SIZE            1024 * 1024
+void BM_Vector()
 {
-	std::list<int> test;
-	for(int i = 0; i < 1024*1024; i++)
-		test.push_back(i);
+    std::vector<int> test{};
+    for(int i = 0; i < SIZE; i++)
+    {
+        test.push_back(i);
+    }
 
-	long sum = 0;
-	for(auto _ : state)
-	{
-		for(auto& i : test)
-		{
-			sum += i;
-		}
-	}
+    long total = 0;
+    for(auto& i : test)
+    {
+        total += i;
+    }
 }
 
-static void BM_SumVector(benchmark::State& state)
+void BM_List()
 {
-	std::vector<int> test;
-	for(int i = 0; i < 1024*1024; i++)
-		test.push_back(i);
+    std::vector<int> test{};
+    for(int i = 0; i < SIZE; i++)
+    {
+        test.push_back(i);
+    }
 
-	long sum = 0;
-	for(auto _ : state)
-	{
-		for(auto& i : test)
-		{
-			sum += i;
-		}
-	}
+    long total = 0;
+    for(auto& i : test)
+    {
+        total += i;
+    }
 }
 
-BENCHMARK(BM_SumList);
-BENCHMARK(BM_SumVector);
-
-BENCHMARK_MAIN();
+int main()
+{
+    BM_Vector();
+    return 0;
+}
